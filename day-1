@@ -1,0 +1,119 @@
+//lead code 75 problem solving
+
+
+class Solution {
+public:
+    void sortColors(vector<int>& arr) {
+        int zero = 0, one = 0, two = arr.size() - 1;
+
+        while (one <= two) {
+            if (arr[one] == 2) {
+                swap(arr[one], arr[two]);
+                two--;
+            }
+            else if (arr[one] == 0) {
+                swap(arr[one], arr[zero]);
+                one++;
+                zero++;
+            }
+            else { 
+                one++;
+            }
+        }
+    }
+};
+
+
+
+//2149  problem slove  rearrange array element
+
+class Solution {
+public:
+    vector<int> rearrangeArray(vector<int>& arr) {
+        vector <int>ans(arr.size());
+        int  p=0,n=1;
+        for (int i=0;i<arr.size();i++){
+            if (arr[i]<0){
+                ans[n]=arr[i];
+                n+=2;
+            }
+            else{
+                ans[p]=arr[i];
+                p +=2;
+
+            }
+            }
+            return ans;
+    }
+    
+};
+
+//724 problem number in leetcode
+
+class Solution {
+public:
+    int pivotIndex(vector<int>& arr) {
+        int n = arr.size();
+
+        vector<int> left(n, 0), right(n, 0);
+
+        // Left sums
+        for (int i = 1; i < n; i++) {
+            left[i] = left[i - 1] + arr[i - 1];
+        }
+
+        // Right sums
+        for (int i = n - 2; i >= 0; i--) {
+            right[i] = right[i + 1] + arr[i + 1];
+        }
+
+        // Find pivot index
+        for (int i = 0; i < n; i++) {
+            if (left[i] == right[i]) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+};
+
+
+
+//problem 41 in leedcode  
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& arr) {
+        int n=arr.size();
+        unordered_set<int>st;
+        for(int i:arr)
+        st.insert(i);
+        for(int i=1;i<=n;i++){
+            if(st.find(i)==st.end())
+            return i;
+        }
+        return n+1;
+    }
+};
+
+ second method to slove this same upper question
+   
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& arr) {
+        int n=arr.size();
+        for(int i=0;i<n;i++){
+           while (arr[i]>=1&&arr[i]<=n &&arr[arr[i]-1]!=arr[i])
+            {
+                swap(arr[i],arr[arr[i]-1]);
+
+            }
+
+        }
+        for(int i=0;i<n;i++){
+            if(arr[i]!=i+1)
+            return i+1;
+
+        }return n+1;
+    }
+};
