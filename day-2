@@ -1,0 +1,86 @@
+//leetcode problem643
+
+
+class Solution {
+public:
+    double findMaxAverage(vector<int>& arr, int k) {
+        int left =0,right=0;
+        double sum=0;
+        double avg=INT_MIN;
+        while(right<arr.size()){
+            sum +=arr[right];
+            if(right-left+1==k){
+              avg=max(  sum/k,avg);
+              sum-=arr[left];
+              left++;
+            }  right++;      
+            }
+        
+
+
+        return avg;
+    }
+};
+
+
+//leetcode 209 problem 
+
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int>& arr) {
+        int sum=0;
+        int len =INT_MAX;
+        int right=0,left=0;
+        while(right<arr.size()){
+            sum+= arr[right];
+           while (sum>=target){
+                len=min(len,right-left+1);
+                sum-=arr[left];
+                left++;
+
+            } 
+            right++;
+        }
+        
+    if(len==INT_MAX)
+    return 0;
+    return len;
+
+        
+    }
+};
+
+ //code in leetcode 3 problem 
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int len=0;
+        int left=0,right=0;
+        vector<int>hash(128,-1);
+        while(right<s.size()){
+            int preindex=hash[s[right]];
+            if(preindex!=-1&&preindex>=left){
+                left=preindex+1;
+
+            }
+            len=max(len,right-left+1);
+             hash[s[right]]=right;
+            right++;
+
+
+        }
+        return len;
+    }
+};
+
+//28 problem in leetcode
+
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+      if(haystack.find(needle)==haystack.npos) 
+      return -1;
+      else
+        return haystack.find(needle);     
+    }
+};
