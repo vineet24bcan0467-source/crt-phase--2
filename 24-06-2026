@@ -1,0 +1,174 @@
+//382 leetcode in problem
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+    vector<int>arr;
+
+public:
+    Solution(ListNode* head) {
+        while (head){
+            arr.push_back(head->val);
+            head=head->next;
+
+        }
+        
+    }
+    
+    int getRandom() {
+        int randIndex=rand ()%arr.size();
+        return arr[randIndex];
+        
+    }
+};
+
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution* obj = new Solution(head);
+ * int param_1 = obj->getRandom();
+ */
+
+
+
+
+ //86 
+
+ /**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* partition(ListNode* head, int x) {
+        ListNode dummy1,dummy2;
+    ListNode*p1=&dummy1,*p2=&dummy2;
+    while(head){
+        if(head->val<x){
+            p1->next=head;
+            p1=p1->next;
+
+        }
+        else{
+            p2->next=head;
+            p2=p2->next;
+
+        }
+    head=head->next;
+    }
+
+        p1->next=dummy2.next;
+        p2->next=nullptr;
+        return dummy1.next;
+    
+
+        
+    } 
+};
+
+
+//234 
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+    ListNode*midNode(ListNode*head){
+        ListNode*slow=head,*fast=head;
+        while(fast->next!=nullptr&&fast->next->next!=nullptr){
+            slow=slow->next;
+            fast=fast->next->next;
+
+        }
+
+        return slow;
+
+    }
+public:
+    bool isPalindrome(ListNode* head) {
+        ListNode*mid=midNode(head);
+        ListNode*ptr=mid->next;
+        mid->next=nullptr;
+        stack<int>stk;
+        while(ptr){
+            stk.push(ptr->val);
+            ptr=ptr->next;
+
+        }
+
+        while(!stk.empty()){
+            if(stk.top()!=head->val)
+            return false;
+            head=head->next;
+            stk.pop();
+        }
+
+       return true; 
+    }
+};
+
+//71
+
+class Solution {
+public:
+    string simplifyPath(string path) {
+        stack<string> stk;
+
+        for (int i = 0; i < path.size(); ) {
+
+            // Skip '/'
+            while (i < path.size() && path[i] == '/') {
+                i++;
+            }
+
+            string temp;
+
+            // Collect directory name
+            while (i < path.size() && path[i] != '/') {
+                temp.push_back(path[i]);
+                i++;
+            }
+
+            if (temp == "." || temp == "") {
+                continue;
+            }
+            else if (temp == "..") {
+                if (!stk.empty()) {
+                    stk.pop();
+                }
+            }
+            else {
+                stk.push(temp);
+            }
+        }
+
+        string ans = "";
+
+        while (!stk.empty()) {
+            ans = "/" + stk.top() + ans;
+            stk.pop();
+        }
+
+        return ans.empty() ? "/" : ans;
+    }
+};
